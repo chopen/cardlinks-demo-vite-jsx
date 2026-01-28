@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 // https://github.com/casvil/another-react-component-library
 import { Button, CreditCardForm } from 'another-react-component-library';
@@ -6,6 +7,7 @@ import { Button, CreditCardForm } from 'another-react-component-library';
 import CustomLink from '@/components/CustomLink';
 
 export default function Home() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
@@ -47,7 +49,8 @@ export default function Home() {
     setIsVerified(true); // Now go to Address collection step
     console.log('setting newCardLinksData: ', newCardLinksData);
     sessionStorage.setItem('cardLinksData', JSON.stringify(newCardLinksData));
-    router.push(`/address`);
+    console.log('This: ', this);
+    navigate(`/Address`);
   };
 
   return (

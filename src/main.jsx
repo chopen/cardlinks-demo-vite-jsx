@@ -12,8 +12,8 @@ root.render(
     <React.StrictMode>
       <App>
         <Helmet
-          defaultTitle='Vite React Tailwind Starter'
-          titleTemplate='%s | Vite React Tailwind Starter'
+          defaultTitle='Strivve CardLinks OnDemand Demo - Vite'
+          titleTemplate='%s'
         >
           <meta charSet='utf-8' />
           <html lang='id' amp />
