@@ -7,6 +7,8 @@ import * as z from 'zod';
 // https://github.com/casvil/another-react-component-library
 import { CreditCardPreview } from 'another-react-component-library';
 
+import useGlobalSessionState from '../utils/sessionStorage.jsx';
+
 // Define the validation schema for an address using Zod
 const addressSchema = z.object({
   address1: z
@@ -22,30 +24,7 @@ const addressSchema = z.object({
 
 export default function CollectCardAddress() {
   const navigate = useNavigate();
-  const [cardLinksData, setCardLinksData] = useState(() => {
-    try {
-      let theCardLinksData = {
-        cardData: {
-          cardNumber: '',
-          cardholderName: '',
-          cvc: '',
-          expiryDate: '',
-        },
-      };
-      if (typeof sessionStorage != 'undefined') {
-        let savedCardLinksData = sessionStorage.getItem('cardLinksData');
-        if (savedCardLinksData) {
-          console.log('savedCardLinksData: ', savedCardLinksData);
-          theCardLinksData = JSON.parse(savedCardLinksData);
-        }
-      }
-      console.log('theCardLinksData: ', theCardLinksData);
-      return theCardLinksData;
-    } catch (error) {
-      console.error('Session storage error:', error);
-      return {};
-    }
-  });
+  const [cardLinksData, setCardLinksData] = useGlobalSessionState({});
 
   const {
     register,
@@ -104,7 +83,7 @@ export default function CollectCardAddress() {
         showCvc={false}
         size='lg'
       />
-      <div className='relative flex py-5 items-center'>
+      <div className='relative flex py-5 pt-4 items-center'>
         <div className='flex-grow border-t border-gray-400'></div>
         <span className='flex-shrink mx-4 pt-4 pb-1 text-gray-400'>
           Cardholder Address

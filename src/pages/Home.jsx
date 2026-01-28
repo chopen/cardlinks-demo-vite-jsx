@@ -4,38 +4,15 @@ import { useNavigate } from 'react-router';
 // https://github.com/casvil/another-react-component-library
 import { Button, CreditCardForm } from 'another-react-component-library';
 
-import CustomLink from '@/components/CustomLink';
+import useGlobalSessionState from '../utils/sessionStorage.jsx';
 
 export default function Home() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
-  const [cardLinksData, setCardLinksData] = useState(() => {
-    try {
-      let theCardLinksData = {
-        cardData: {
-          cardNumber: '',
-          cardholderName: '',
-          cvc: '',
-          expiryDate: '',
-        },
-      };
-      if (typeof sessionStorage != 'undefined') {
-        let savedCardLinksData = sessionStorage.getItem('cardLinksData');
-        if (savedCardLinksData) {
-          console.log('savedCardLinksData: ', savedCardLinksData);
-          theCardLinksData = JSON.parse(savedCardLinksData);
-        }
-      }
-      console.log('theCardLinksData: ', theCardLinksData);
-      return theCardLinksData;
-    } catch (error) {
-      console.error('Session storage error:', error);
-      return {};
-    }
-  });
-
+  const [cardLinksData, setCardLinksData] = useGlobalSessionState({});
+  console.log('Loaded....');
   const handleSubmit = async (cardData) => {
     let newCardLinksData = { cardData: cardData };
     setIsSubmitting(true);
