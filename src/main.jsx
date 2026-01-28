@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // Note the '/client' import path
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 import '@/index.css';
 import App from '@/App';
@@ -10,18 +10,15 @@ const root = ReactDOM.createRoot(container); // Create a root
 root.render(
   <>
     <React.StrictMode>
-      <HelmetProvider>
-        <div>
-          <Helmet
-            defaultTitle='Vite React Tailwind Starter'
-            titleTemplate='%s | Vite React Tailwind Starter'
-          >
-            <meta charSet='utf-8' />
-            <html lang='id' amp />
-          </Helmet>
-          <App />
-        </div>
-      </HelmetProvider>
+      <App>
+        <Helmet
+          defaultTitle='Vite React Tailwind Starter'
+          titleTemplate='%s | Vite React Tailwind Starter'
+        >
+          <meta charSet='utf-8' />
+          <html lang='id' amp />
+        </Helmet>
+      </App>
     </React.StrictMode>
   </>,
 );
