@@ -16,6 +16,9 @@ module.exports = {
         },
         dark: '#333333',
       },
+      container: {
+        center: true,
+      },
     },
   },
   variants: {

@@ -53,7 +53,9 @@ export default function CollectCardAddress() {
       setMessage('Address submitted successfully!');
       console.log('setting newCardLinksData: ', newCardLinksData);
       sessionStorage.setItem('cardLinksData', JSON.stringify(newCardLinksData));
-      navigate(`/options`);
+      setCardLinksData(newCardLinksData);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      navigate(`/Options`);
     } catch (error) {
       setMessage('Submission failed.');
     }

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 
 import useGlobalSessionState from '../utils/sessionStorage.jsx';
+import Accordian from '@/components/Accordian';
 
 // https://github.com/casvil/another-react-component-library
 import {
@@ -27,20 +28,27 @@ import {
   ListEnd,
   Funnel,
   Heading2,
+  Filter,
 } from 'lucide-react';
 
 export default function CollectCardLinkOptions() {
+  const navigate = useNavigate();
   const [cardLinksData, setCardLinksData] = useGlobalSessionState({});
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   const [message, setMessage] = useState('');
+  const [authCvv, setAuthCvv] = useState(false);
+  const [authZipcode, setAuthZipcode] = useState(false);
+  const onToggleAuth = (state) => {
+    console.log('Toggle Auth state: ', state);
+    console.log('useCVV: ' + authCvv + '   useZipcode: ' + authZipcode);
+    if (state.indexOf('useCVV') >= 0) setAuthCvv(true);
+    else setAuthCvv(false);
+    if (state.indexOf('useZipcode') >= 0) setAuthZipcode(true);
+    else setAuthZipcode(false);
+  };
 
   // The onSubmit function handles the form data when validation passes
-  const onSubmit = async (data) => {
+  const handleSubmit = async (data) => {
     setMessage('Submitting...');
     try {
       // In a real application, you would send this data to a Next.js API route or Server Action
@@ -57,7 +65,7 @@ export default function CollectCardLinkOptions() {
       setMessage('Address submitted successfully!');
       console.log('setting newCardLinksData: ', newCardLinksData);
       sessionStorage.setItem('cardLinksData', JSON.stringify(newCardLinksData));
-      //router.push(`/generate`);
+      navigate(`/Generate`);
     } catch (error) {
       setMessage('Submission failed.');
     }
@@ -121,7 +129,7 @@ export default function CollectCardLinkOptions() {
             className='flex py-1 items-center justify-center bg-white p-2'
           >
             {/* Security Preferences */}
-            <div className='flex flex-col col-span-2 mt-6'>
+            <div className='flex flex-col col-span-2 mt-2'>
               <Divider className='inherit' />
               <h3 className='items-center justify-center text-lg font-semibold text-gray-900 my-4 flex gap-2'>
                 <LockKeyhole className='w-5 h-5' />
@@ -133,6 +141,7 @@ export default function CollectCardLinkOptions() {
                 labelClassName='flex text-lg font-semibold text-gray-100'
                 className='flex items-center justify-center text-gray-900 text-lg'
                 options={authTypeOptions}
+                onChange={onToggleAuth}
                 checkboxProps={{
                   size: 'md',
                   wrapperClassName: 'hover:bg-gray-50 px-4 rounded',
@@ -143,38 +152,41 @@ export default function CollectCardLinkOptions() {
             {/* Styling Settings */}
             <div className='flex flex-col col-span-2 mt-2'>
               <Divider />
-              <h3 className='items-center justify-center text-lg font-semibold text-gray-900 my-4 flex gap-2'>
-                <SquareUserRound className='w-5 h-5' />
-                Cardholder Experience Styling Settings
-              </h3>
-              <h2 className='items-center justify-center text-lg text-red-500 font-semibold text-gray-900 my-2 flex gap-2'>
-                {' '}
-                Bryan, Praveen, Gary?{' '}
-              </h2>
+              <Accordian
+                sectiontitle='Cardholder Experience Styling Settings'
+                icon={SquareUserRound}
+              >
+                <h2 className='items-center justify-center text-lg text-red-500 font-semibold text-gray-900 my-2 flex gap-2'>
+                  {' '}
+                  Bryan, Praveen, Gary?{' '}
+                </h2>
+              </Accordian>
             </div>
             {/* Targeted Sites Settings */}
             <div className='flex flex-col col-span-2 mt-2'>
               <Divider />
-              <h3 className='items-center justify-center text-lg font-semibold text-gray-900 my-4 flex gap-2'>
-                <SquareUserRound className='w-5 h-5' />
-                Targeted Sites Display Settings
-              </h3>
-              <h2 className='items-center justify-center text-lg text-red-500 font-semibold text-gray-900 my-2 flex gap-2'>
-                {' '}
-                Bryan, Praveen, Gary?{' '}
-              </h2>
+              <Accordian
+                sectiontitle='Targeted Sites Display Settings'
+                icon={Filter}
+              >
+                <h2 className='items-center justify-center text-lg text-red-500 font-semibold text-gray-900 my-2 flex gap-2'>
+                  {' '}
+                  Bryan, Praveen, Gary?{' '}
+                </h2>
+              </Accordian>
             </div>
             {/* Analytics Settings */}
-            <div className='col-span-2 mt-1'>
+            <div className='col-span-2 mt-2'>
               <Divider />
-              <h3 className='items-center justify-center text-lg font-semibold text-gray-900 my-4 flex gap-2'>
-                <Funnel className='w-5 h-5' />
-                Analytics and Source Tracking Settings
-              </h3>
-              <h2 className='items-center justify-center text-lg text-red-500 font-semibold text-gray-900 my-2 flex gap-2'>
-                {' '}
-                Bryan, Praveen, Gary?{' '}
-              </h2>
+              <Accordian
+                sectiontitle='Analytics and Source Tracking Settings'
+                icon={LockKeyhole}
+              >
+                <h2 className='items-center justify-center text-lg text-red-500 font-semibold text-gray-900 my-2 flex gap-2'>
+                  {' '}
+                  Bryan, Praveen, Gary?{' '}
+                </h2>
+              </Accordian>
             </div>
             {/* Composition Settings */}
             <div className='col-span-2 mt-2'>
@@ -198,13 +210,14 @@ export default function CollectCardLinkOptions() {
                   name='emailNotifications'
                   label='Email CardLink?'
                   description='Receive CardLink and QR-Code via email'
-                  defaultChecked={true}
+                  defaultChecked={false}
                 />
                 <div className='pb-3'></div>
                 <Switch
                   name='smsNotifications'
                   label='SMS Notifications'
                   description='Receive CardLink and QR-Code via SMS'
+                  defaultChecked={false}
                 />
               </div>
             </div>
