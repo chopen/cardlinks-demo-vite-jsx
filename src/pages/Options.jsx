@@ -58,11 +58,12 @@ export default function CollectCardLinkOptions() {
       let newCardLinksData = {
         cardData: cardLinksData.cardData,
         cardAddress: {},
+        cardLinksOptions: {},
       };
-      newCardLinksData.cardAddress = data;
+      newCardLinksData.cardLinksOptions = data;
+      console.log('cardLinksOptions Submitted data: ', data);
 
-      console.log('Options Submitted Data:', data);
-      setMessage('Address submitted successfully!');
+      setMessage('Options submitted successfully!');
       console.log('setting newCardLinksData: ', newCardLinksData);
       sessionStorage.setItem('cardLinksData', JSON.stringify(newCardLinksData));
       navigate(`/Generate`);

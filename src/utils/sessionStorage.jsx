@@ -37,7 +37,7 @@ export const GlobalSessionStateProvider = ({ children }) => {
           theCardLinksData = JSON.parse(savedCardLinksData);
         }
       }
-      //console.log('theCardLinksData: ', theCardLinksData);
+      console.log('theCardLinksData: ', theCardLinksData);
       return theCardLinksData;
     } catch (error) {
       console.error('Session storage error:', error);
