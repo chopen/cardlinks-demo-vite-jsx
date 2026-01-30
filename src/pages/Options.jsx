@@ -189,39 +189,6 @@ export default function CollectCardLinkOptions() {
                 </h2>
               </Accordian>
             </div>
-            {/* Composition Settings */}
-            <div className='col-span-2 mt-2'>
-              <Divider />
-              <h3 className='items-center justify-center text-lg font-semibold text-gray-900 pt-3 flex gap-2'>
-                <ListEnd className='w-5 h-5' />
-                Post-processing URL Compostion Preferences
-              </h3>
-            </div>
-            <div className='flex items-center justify-center'>
-              <div className='flex flex-col justify-start'>
-                <Switch
-                  name='genQrCode'
-                  label='Generate Personal QR-Code'
-                  description='Create a personal QR-Code?'
-                  defaultChecked={false}
-                  labelClassName=''
-                />
-                <div className='pb-3'></div>
-                <Switch
-                  name='emailNotifications'
-                  label='Email CardLink?'
-                  description='Receive CardLink and QR-Code via email'
-                  defaultChecked={false}
-                />
-                <div className='pb-3'></div>
-                <Switch
-                  name='smsNotifications'
-                  label='SMS Notifications'
-                  description='Receive CardLink and QR-Code via SMS'
-                  defaultChecked={false}
-                />
-              </div>
-            </div>
           </Form>{' '}
         </div>
       </div>
