@@ -20,7 +20,7 @@ export default function GenerateCardLink() {
   const navigate = useNavigate();
   const [cardLinksData, setCardLinksData] = useGlobalSessionState({});
   const [isGenerating, setIsGenerating] = useState(true);
-  callAsyncFunctionWithTimer(3000, setIsGenerating, false);
+  callAsyncFunctionWithTimer(2000, setIsGenerating, false);
 
   console.log('cardholderAddress: ', cardLinksData.cardAddress);
   if (
@@ -29,7 +29,7 @@ export default function GenerateCardLink() {
     typeof cardLinksData.cardAddress !== 'undefined'
   ) {
     return (
-      <div>
+      <div className='flex items-center justify-center mx-w-screen-sm bg-white p-8'>
         <div
           className={`flex pt-10 py-6 items-center justify-center bg-white p-4' ${isGenerating ? 'animate-spin' : ''}`}
         >
@@ -43,7 +43,7 @@ export default function GenerateCardLink() {
             showCvc={false}
             size='sm'
           />
-          </div>
+        </div>
         <div
           className={`flex py-6 items-center justify-center bg-white p-4' ${isGenerating ? 'hidden' : 'block'}`}
         >
